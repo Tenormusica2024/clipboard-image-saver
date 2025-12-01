@@ -1,11 +1,16 @@
 import os
 import datetime
+from pathlib import Path
 from PIL import ImageGrab
 import keyboard
 
-SAVE_DIR = r"C:\Users\B1443kouda\Documents\Obsidian Vault\Codex\snips"
-LOG_PATH = r"C:\Users\B1443kouda\Documents\Obsidian Vault\Codex\tools\snip_hotkey\snip_hotkey.log"
-os.makedirs(SAVE_DIR, exist_ok=True)
+SCRIPT_DIR = Path(__file__).resolve().parent
+DEFAULT_SAVE_DIR = SCRIPT_DIR.parent.parent / "snips"
+DEFAULT_LOG_PATH = SCRIPT_DIR / "snip_hotkey.log"
+
+SAVE_DIR = Path(os.getenv("SNIP_HOTKEY_SAVE_DIR", str(DEFAULT_SAVE_DIR)))
+LOG_PATH = Path(os.getenv("SNIP_HOTKEY_LOG_PATH", str(DEFAULT_LOG_PATH)))
+SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def log(message: str) -> None:
